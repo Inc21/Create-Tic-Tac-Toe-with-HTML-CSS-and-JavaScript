@@ -4,6 +4,7 @@ const restartBtn = document.getElementById("restartBtn");
 const spaces = [];
 const O_TEXT = "O";
 const X_TEXT = "X";
+let container = document.getElementById("gameBoard");
 
 const drawBoard = () => {
     boxes.forEach((box, index) => {
@@ -25,26 +26,14 @@ const drawBoard = () => {
     })
 };
 
-const boxClicked = (e) => {
-    const id = e.target.id;
-    if (!spaces[id]) {
-        spaces[id] = currentPlayer;
-        e.target.innerText = currentPlayer;
-
-        if (playerHasWon()) {
-            playText.innerText = `${currentPlayer} has won!`;
-            return;
-        }
-        currentPlayer = currentPlayer === O_TEXT ? X_TEXT : O_TEXT;
-    }
-};
 
 const playerHasWon = () => {
     if (spaces[0] === currentPlayer) {
-        if (spaces[1] === currentPlayer && spaces[2] === currentPlayer) {
+        if (spaces[0] === currentPlayer && spaces[1] === currentPlayer && spaces[2] === currentPlayer) {
             console.log(`${currentPlayer} wins on top`)
             return true;
-        }
+        } 
+
         if (spaces[3] === currentPlayer && spaces[6] === currentPlayer) {
             console.log(`${currentPlayer} wins on left`)
             return true;
@@ -81,9 +70,30 @@ const playerHasWon = () => {
         if (spaces[4] === currentPlayer && spaces[6] === currentPlayer) {
             console.log(`${currentPlayer} wins diagonally`)
             return true;
+        }
     }
-}
 };
+
+const boxClicked = (e) => {
+    const id = e.target.id;
+    if (!spaces[id]) {
+        spaces[id] = currentPlayer;
+        e.target.innerText = currentPlayer;
+
+        if (playerHasWon()) {
+            playText.innerText = `Player ${currentPlayer} has won!`;
+            style.pointerEvents = "none";
+        }
+        currentPlayer = currentPlayer === O_TEXT ? X_TEXT : O_TEXT;
+    }
+};
+
+// function gameOver() {
+//     if (playerHasWon()) {
+//         gameBoard.style.pointerEvents = "none";
+//     }
+//     console.log(gameOver())
+// }
 
 const restart = () => {
     spaces.forEach((space, index) => {
