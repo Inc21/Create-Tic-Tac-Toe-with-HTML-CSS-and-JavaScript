@@ -4,7 +4,7 @@ const restartBtn = document.getElementById("restartBtn");
 const spaces = [];
 const O_TEXT = "O";
 const X_TEXT = "X";
-let container = document.getElementById("gameBoard");
+
 
 const drawBoard = () => {
     boxes.forEach((box, index) => {
@@ -72,6 +72,8 @@ const playerHasWon = () => {
             return true;
         }
     }
+
+    return false;
 };
 
 const boxClicked = (e) => {
@@ -79,21 +81,16 @@ const boxClicked = (e) => {
     if (!spaces[id]) {
         spaces[id] = currentPlayer;
         e.target.innerText = currentPlayer;
-
+        let container = document.getElementById("gameBoard");
         if (playerHasWon()) {
-            playText.innerText = `Player ${currentPlayer} has won!`;
-            style.pointerEvents = "none";
-        }
-        currentPlayer = currentPlayer === O_TEXT ? X_TEXT : O_TEXT;
+            boxes.forEach((box) => {
+                box.removeEventListener("click", boxClicked);
+            })
+        } else {
+            currentPlayer = currentPlayer === O_TEXT ? X_TEXT : O_TEXT;
+        }  
     }
 };
-
-// function gameOver() {
-//     if (playerHasWon()) {
-//         gameBoard.style.pointerEvents = "none";
-//     }
-//     console.log(gameOver())
-// }
 
 const restart = () => {
     spaces.forEach((space, index) => {
@@ -107,6 +104,7 @@ const restart = () => {
 }
 
 restartBtn.addEventListener("click", restart);
+
 
 restart();
 drawBoard();
