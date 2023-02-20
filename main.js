@@ -1,4 +1,4 @@
-const boxes = Array.from(document.getElementsByClassName("box"));
+let boxes = Array.from(document.getElementsByClassName("box"));
 const playText = document.getElementById("playText");
 const restartBtn = document.getElementById("restartBtn");
 const spaces = [];
@@ -101,10 +101,15 @@ const restart = () => {
     });
     playText.innerText = `Let's Play!`;
     currentPlayer = X_TEXT;
-}
+    }
+
+
+// function reset() {
+//     let container = getElementById("container");
+//     container.addEventListener("click", boxClicked);
+// }
 
 restartBtn.addEventListener("click", restart);
-
 
 restart();
 drawBoard();
