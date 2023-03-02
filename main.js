@@ -26,6 +26,21 @@ const drawBoard = () => {
     })
 };
 
+const boxClicked = (e) => {
+    const id = e.target.id;
+    if (!spaces[id]) {
+        spaces[id] = currentPlayer;
+        e.target.innerText = currentPlayer;
+        let container = document.getElementById("gameBoard");
+        if (playerHasWon()) {
+            boxes.forEach((box) => {
+                box.removeEventListener("click", boxClicked);
+            })
+        } else {
+            currentPlayer = currentPlayer === O_TEXT ? X_TEXT : O_TEXT;
+        }  
+    }
+};
 
 const playerHasWon = () => {
     if (spaces[0] === currentPlayer) {
@@ -76,21 +91,6 @@ const playerHasWon = () => {
     return false;
 };
 
-const boxClicked = (e) => {
-    const id = e.target.id;
-    if (!spaces[id]) {
-        spaces[id] = currentPlayer;
-        e.target.innerText = currentPlayer;
-        let container = document.getElementById("gameBoard");
-        if (playerHasWon()) {
-            boxes.forEach((box) => {
-                box.removeEventListener("click", boxClicked);
-            })
-        } else {
-            currentPlayer = currentPlayer === O_TEXT ? X_TEXT : O_TEXT;
-        }  
-    }
-};
 
 const restart = () => {
     spaces.forEach((space, index) => {
